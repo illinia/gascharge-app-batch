@@ -42,9 +42,6 @@ if (project.hasProperty('dev')) {
         api 'com.gascharge.taemin:gascharge-module-yml:0.0.1-SNAPSHOT'
     }
 } else {
-    repositories {
-        mavenLocal()
-    }
     dependencies {
         api project(":gascharge-service-reservation")
         api project(":gascharge-module-yml")
