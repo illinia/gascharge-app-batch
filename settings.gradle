@@ -1,1 +1,9 @@
+def includeProject(String moduleName, String moduleType) {
+    def moduleDirName = "gascharge-${moduleType}"
+    def moduleFullName = "${moduleDirName}-${moduleName}"
+    include moduleFullName
+    project(":${moduleFullName}").projectDir = file("../../${moduleDirName}/${moduleFullName}")
+}
 
+includeProject("yml", "module")
+includeProject("reservation", "service")
