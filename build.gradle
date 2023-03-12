@@ -1,0 +1,91 @@
+plugins {
+    id 'org.springframework.boot' version '2.7.3'
+    id 'io.spring.dependency-management' version '1.1.0'
+    id 'java-library'
+    id 'maven-publish'
+}
+
+subprojects {
+    apply plugin: 'java'
+}
+
+group = 'com.gascharge.taemin'
+version = '0.0.1-SNAPSHOT'
+
+dependencyManagement {
+    imports {
+        mavenBom org.springframework.boot.gradle.plugin.SpringBootPlugin.BOM_COORDINATES
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+if (project.hasProperty('dev')) {
+    repositories {
+        mavenLocal()
+    }
+    dependencies {
+        api 'com.gascharge.taemin:gascharge-service-reservation:0.0.1-SNAPSHOT'
+        api 'com.gascharge.taemin:gascharge-module-yml:0.0.1-SNAPSHOT'
+    }
+} else if (project.hasProperty("pro")) {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/illinia/gascharge-lib")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+            }
+        }
+    }
+    dependencies {
+        api 'com.gascharge.taemin:gascharge-service-reservation:0.0.1-SNAPSHOT'
+        api 'com.gascharge.taemin:gascharge-module-yml:0.0.1-SNAPSHOT'
+    }
+} else {
+    repositories {
+        mavenLocal()
+    }
+    dependencies {
+        api 'com.gascharge.taemin:gascharge-service-reservation:0.0.1-SNAPSHOT'
+        api 'com.gascharge.taemin:gascharge-module-yml:0.0.1-SNAPSHOT'
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+dependencies {
+    implementation 'org.projectlombok:lombok:1.18.26'
+    annotationProcessor 'org.projectlombok:lombok:1.18.26'
+    testImplementation 'org.projectlombok:lombok:1.18.26'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
+
+    api 'org.springframework.boot:spring-boot-starter-batch'
+    implementation 'org.springframework.boot:spring-boot-starter-quartz'
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+}
+
+publishing {
+    repositories {
+        maven {
+            name = "GitHubPackages"
+            url = uri("https://maven.pkg.github.com/illinia/gascharge-lib")
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+            }
+        }
+    }
+    publications {
+        gpr(MavenPublication) {
+            from(components.java)
+        }
+    }
+}
