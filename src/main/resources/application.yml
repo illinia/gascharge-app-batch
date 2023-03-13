@@ -1,32 +1,14 @@
 spring:
   profiles:
-    active: default
-    include: local-batch
+    active: local
+    include: 
+      - charge
     group:
-      local-batch: charge
-#  redis:
-#    host: localhost
-#    port: 6379
+      local: local-db
+      dev: dev-db
   jpa:
-#    show-sql: true
-#    properties:
-#      hibernate:
-#        format_sql: true
     hibernate:
       ddl-auto: none
-#  datasource:
-#    url: jdbc:mysql://localhost:13307/Reservation
-#    username: root
-#    password: 1212
-#    driver-class-name: com.mysql.cj.jdbc.Driver
-#  batch:
-#    job:
-#      enabled: false
-
-#logging:
-#  level:
-#    root: debug
-
 server:
   port: 8301
 

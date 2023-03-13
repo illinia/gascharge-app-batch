@@ -36,7 +36,7 @@ pipeline {
                 channel: '#gascharge',
                 color: '#00FF00',
                 message: """
-                    success
+                    Success ${env.JOB_NAME} [${env.BUILD_NUMBER}
                 """
             )
         }
@@ -44,7 +44,9 @@ pipeline {
             slackSend (
                 channel: '#gascharge',
                 color: '#FF0000',
-                message: "Fail"
+                message: """
+                    Failed ${env.JOB_NAME} [${env.BUILD_NUMBER}
+                """
             )
         }
     }
