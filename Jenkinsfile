@@ -47,13 +47,16 @@ pipeline {
                                     sourceFiles: 'application-charge.yml, Dockerfile'
                                 ),
                                 sshTransfer(
-                                    execCommand: '/usr/local/bin/docker stop gascharge-app-reservation-batch'
+                                    execCommand: '/usr/local/bin/docker stop gascharge-app-reservation-batch',
+                                    ignoreErrors: true
                                 ),
                                 sshTransfer(
-                                    execCommand: '/usr/local/bin/docker rm gascharge-app-reservation-batch'
+                                    execCommand: '/usr/local/bin/docker rm gascharge-app-reservation-batch',
+                                    ignoreErrors: true
                                 ),
                                 sshTransfer(
-                                    execCommand: '/usr/local/bin/docker rmi gascharge-app-batch'
+                                    execCommand: '/usr/local/bin/docker rmi gascharge-app-batch',
+                                    ignoreErrors: true
                                 ),
                                 sshTransfer(
                                     execCommand: 'nohup /usr/local/bin/docker build -t gascharge-app-batch k8s/gascharge-app-batch/ > nohup-app-batch-build.out 2>&1 &'
