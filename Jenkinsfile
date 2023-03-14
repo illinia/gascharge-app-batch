@@ -44,10 +44,13 @@ pipeline {
                                 ),
                                 sshTransfer(
                                     remoteDirectory: 'k8s/gascharge-app-batch',
-                                    sourceFiles: 'application-charge.yml, Dockerfile'
+                                    sourceFiles: 'application-charge.yml, Dockerfile, docker-script.sh'
                                 ),
                                 sshTransfer(
-                                    execCommand: './docker-script.sh'
+                                    execCommand: 'chmod +x k8s/gascharge-app-batch/docker-script.sh'
+                                ),
+                                sshTransfer(
+                                    execCommand: 'bash k8s/gascharge-app-batch/docker-script.sh'
                                 )
                             ]
                         )
