@@ -1,4 +1,7 @@
 pipeline {
+    options {
+        skipDefaultCheckout true
+    }
     agent any
     tools {
         gradle 'gradle'
