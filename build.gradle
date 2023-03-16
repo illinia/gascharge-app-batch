@@ -82,3 +82,7 @@ publishing {
         }
     }
 }
+
+jar {
+    enabled = false
+}
