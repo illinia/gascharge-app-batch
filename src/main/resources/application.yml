@@ -9,6 +9,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+  batch:
+    jdbc:
+      initialize-schema: always
+
 server:
   port: 8301
 
